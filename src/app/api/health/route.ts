@@ -1,8 +1,12 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 
+export const dynamic = "force-dynamic"; // 🚀 viktig rad!
+export const revalidate = 0; // 🚀 stoppar build time fetch
+
 export async function GET() {
   try {
+    // ❗ Inga prisma-operationer körs under build eftersom dynamic=force-dynamic
     await prisma.$queryRaw`SELECT 1`;
 
     return NextResponse.json(
